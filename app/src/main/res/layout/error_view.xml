@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toosl="http://schemas.android.com/tools"
+    android:id="@+id/errorContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="@dimen/padding_medium"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvError"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        toosl:text="Тут текст ошибки будет, которая придет с сервера, а может и не только с сервера. Это длинное сообщение, чтобы посмотреть верстку"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button.reload"/>
+</LinearLayout>

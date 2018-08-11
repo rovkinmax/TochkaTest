@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion versions.compileSdk
+
+    defaultConfig {
+        applicationId "ru.rovkinmax.tochkatest"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resValue 'integer', 'com_vk_sdk_AppId', "6653680"
+        resValue 'string', 'facebook_app_id', "\"1290053637796752\""
+        resValue 'string', 'fb_login_protocol_scheme', "\"fb1290053637796752\""
+        resValue 'string', 'server_client_id', "\"198312297239-8j4sm4homi5crmraf9d74dj3s2tenao7.apps.googleusercontent.com\""
+
+        buildConfigField 'String', 'ENDPOINT', "\"https://api.github.com/\""
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('debug.jks')
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            multiDexEnabled true
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+kapt {
+    arguments {
+        arg("toothpick_registry_package_name", "ru.rovkinmax.tochkatest")
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        forcedModules = ["com.android.support:support-v4:$versions.support"]
+    }
+}
+
+dependencies {
+    implementation project(':socialnetwork')
+    implementation project(':fieldsadapter')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation libraries.kotlinStdlib
+    implementation libraries.rxJava
+    implementation libraries.rxAndroid
+    implementation 'com.jakewharton.rxbinding2:rxbinding-design:2.1.1' exclude group: 'com.android.support'
+
+    implementation "com.android.support:appcompat-v7:$versions.support"
+    implementation "com.android.support:recyclerview-v7:$versions.support"
+    implementation "com.android.support:design:$versions.support"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.vk:androidsdk:1.6.9'
+    implementation 'com.facebook.android:facebook-android-sdk:4.24.0'
+
+
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
+    implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+
+    implementation "com.github.stephanenicolas.toothpick:toothpick-runtime:$versions.toothpik"
+    kapt libraries.toothpickCompiler
+
+    implementation "ru.terrakok.cicerone:cicerone:$versions.cicerone"
+    implementation 'com.jakewharton.timber:timber:4.7.0'
+
+    testImplementation 'junit:junit:4.12'
+}
